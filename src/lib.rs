@@ -1,5 +1,4 @@
-pub fn sort(pairs: Vec<[i64; 2]>) -> Vec<[i64; 2]> {
-    let mut pairs = pairs.clone();
+pub fn sort(pairs: &mut Vec<[i64; 2]>) {
     let len = pairs.len();
     let min = pairs.iter().min_by_key(|p| p[0]).unwrap()[0];
     // let max = pairs.iter().max_by_key(|p| p[0]).unwrap()[0];
@@ -34,7 +33,6 @@ pub fn sort(pairs: Vec<[i64; 2]>) -> Vec<[i64; 2]> {
         }
     }
     pairs.resize(j as usize, [0, 0]);
-    pairs
 }
 
 fn sort_with_index(v: &mut Vec<i64>, from: i64, to: i64) {
@@ -75,23 +73,26 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let input = vec![[4, 1], [2, 3], [1, 2], [5, 3], [4, 4]];
+        let mut input = vec![[4, 1], [2, 3], [1, 2], [5, 3], [4, 4]];
+        sort(&mut input);
         let output = vec![[1, 2], [2, 3], [4, 1], [4, 4], [5, 3]];
-        assert_eq!(sort(input), output);
+        assert_eq!(input, output);
     }
 
     #[test]
     fn dupplicate() {
-        let input = vec![[4, 4], [2, 3], [1, 2], [5, 3], [4, 4]];
+        let mut input = vec![[4, 4], [2, 3], [1, 2], [5, 3], [4, 4]];
         let output = vec![[1, 2], [2, 3], [4, 4], [5, 3]];
-        assert_eq!(sort(input), output);
+        sort(&mut input);
+        assert_eq!(input, output);
     }
 
     #[test]
     fn already_sorted() {
-        let input = vec![[1, 2], [2, 3], [4, 1], [4, 4], [5, 3]];
+        let mut input = vec![[1, 2], [2, 3], [4, 1], [4, 4], [5, 3]];
         let output = vec![[1, 2], [2, 3], [4, 1], [4, 4], [5, 3]];
-        assert_eq!(sort(input), output);
+        sort(&mut input);
+        assert_eq!(input, output);
     }
 
     #[test]
